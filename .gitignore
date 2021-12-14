@@ -5,5 +5,4 @@ build/
 /VS_Test/Debug/
 /VS_Test/**/Debug/
 *.sdf
-*.sln
 *.suo
