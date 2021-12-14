@@ -1,0 +1,9 @@
+build/
+
+# VS_Test
+/VS_Test/.vs/
+/VS_Test/Debug/
+/VS_Test/**/Debug/
+*.sdf
+*.sln
+*.suo
