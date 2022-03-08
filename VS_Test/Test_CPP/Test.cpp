@@ -1,60 +1,104 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
+#include <array>
+#include <unordered_map>
+#include <unordered_set>
+#include <stack>
 #include <queue>
+#include <sstream>
+#include <numeric>
+#include <memory>
+#include <string>
+#include <assert.h>
 
 using namespace std;
 
-//struct ListNode {
-//	int val;
-//	ListNode* next;
-//	ListNode() : val(0), next(nullptr) {};
-//	ListNode(int x) : val(x), next(nullptr) {};
-//	//ListNode(ListNode* next) : val(0), next(next) {};
-//	ListNode(int x, ListNode* next) : val(x), next(next) {};
-//};
+struct ListNode {
+	int val;
+	ListNode* next;
+	ListNode() : val(0), next(nullptr) {};
+	ListNode(int x) : val(x), next(nullptr) {};
+	ListNode(ListNode* next) : val(0), next(next) {};
+	ListNode(int x, ListNode* next) : val(x), next(next) {};
+};
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+class Node {
+public:
+	int val;
+	Node* next;
 
-//struct TreeNode {
-//    int val;
-//    TreeNode *left;
-//    TreeNode *right;
-//    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-//    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-//    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-//};
+	Node() {}
 
+	Node(int _val) {
+		val = _val;
+		next = NULL;
+	}
+
+	Node(int _val, Node* _next) {
+		val = _val;
+		next = _next;
+	}
+};
+
+/*
+*/
 class Solution {
 public:
-	int scheduleCourse(vector<vector<int>>& courses) {
-		sort(courses.begin(), courses.end(), [](const auto& v1, const auto& v2) {
-			return v1[1] < v2[1];
-		});
+	string addBinary(string a, string b) {
+		string res;
+		reverse(a.begin(), a.end());
+		reverse(b.begin(), b.end());
 
-		priority_queue<int> q;
-		int cur_len = 0;// total duration in current position
-		for (const auto& course : courses) {
-			int t = course[0], dead_line = course[1];
-			if (cur_len + t <= dead_line) {
-				cur_len += t;
-				q.emplace(t);
+		int n = max(a.size(), b.size());
+		int carry = 0;
+		for (int i = 0; i < n; ++i) {
+			if (i < a.size()) {
+				carry += a[i] - '0';
 			}
-			else if(!q.empty() && t < q.top()) {
-				cur_len += -q.top() + t;
-				q.pop();
-				q.emplace(t);
+			if (i < b.size()) {
+				carry += b[i] - '0';
 			}
-			else {
-				//
-			}
+			res.push_back((carry % 2) ? '1' : '0');
+			carry /= 2;
+		}
+		if (carry) {
+			res.push_back('1');
 		}
 
-		return q.size();
+		reverse(res.begin(), res.end());
+		return res;
 	}
 };
 
 int main(){
 	Solution s;
-	s.maxProduct(vector<int> {2,3,-2,4});
+
+	ListNode node(7); ListNode node2(2); ListNode node3(4); ListNode node4(3);
+	ListNode* head = &node;
+	ListNode* cur = head;
+	cur->next = &node2;
+	cur = cur->next;
+	cur->next = &node3;
+	cur = cur->next;
+	cur->next = &node4;
+
+	ListNode node_0(5); ListNode node_1(6); ListNode node_2(4);
+	ListNode* head_0 = &node_0;
+	cur = head_0;
+	cur->next = &node_1;
+	cur = cur->next;
+	cur->next = &node_2;
+
+	cur = s.addTwoNumbers(head, head_0);
+	cout << "1";
 
 	getchar();
 	return 0;
